@@ -54,9 +54,10 @@ export const App = () => {
           }
           setImages(images.hits);
           setTotalHits(images.totalHits);
-        } catch (error) {
-         alert ('Error:', error);
-          setError(error.message);
+        } catch (newError) {
+          setError(newError.message);
+        //  alert ('Error:', error);
+         
         }  finally {
           setIsloading(false);
         }
@@ -70,9 +71,10 @@ export const App = () => {
           }
           setImages(prevImages => [...prevImages, ...images.hits]);
           setTotalHits(images.totalHits);
-        } catch (error) {
-          alert ('Error:', error);
-          setError(error.message);
+        } catch (newError) {
+          setError(newError.message);
+          // alert ('Error:', error);
+          
         } finally {
           setIsloading(false);
         }
@@ -84,10 +86,11 @@ export const App = () => {
   return (
     <div className={styles.app}>
       <Searchbar onSubmit={handleFormSubmit} />
+      {error ? (<p className={styles.error}>{    error    }</p>) : (<ImageGallery images={images} onOpenModal={onOpenModal} />) }
 
       {isLoading && <Loader />}
 
-      <ImageGallery images={images} onOpenModal={onOpenModal} />
+      
 
       {page < Math.ceil(totalHits / 12) ? (
         <Button onClick={handleLoadMore} />
